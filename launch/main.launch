@@ -1,0 +1,42 @@
+<launch>
+    <arg name="host" default="127.0.0.1" />
+    <arg name="port" default="10000" />
+    <arg name="read_freq" default="100" />
+    <arg name="sim_names" />
+    <arg name="delay" default="1.0" />
+    <arg name="do_rqt_console" default="0" />
+
+    <include file="$(find icd_42_ros)/launch/inst42.launch" if="$(eval len(sim_names) > 0)">
+        <arg name="index" value="1" />
+        <arg name="sim_names" value="$(arg sim_names)" />
+    </include>
+
+    <node name="my_icd_node"
+          pkg="icd_42_ros"
+          type="IcdNode"
+          required="true"
+          output="screen"
+          launch-prefix="bash -c 'sleep $(arg delay); $0 $@'"
+    />
+
+    <node name="my_rqt_console"
+          pkg="rqt_console"
+          type="rqt_console"
+          required="false"
+          output="screen"
+          if="$(arg do_rqt_console)"
+    />
+    <node name="my_rqt_logger_level"
+          pkg="rqt_logger_level"
+          type="rqt_logger_level"
+          required="false"
+          output="screen"
+          if="$(arg do_rqt_console)"
+    />
+
+    <rosparam subst_value="True">
+        /host: $(arg host)
+        /port: $(arg port)
+        /read_freq: $(arg read_freq)
+    </rosparam>
+</launch>

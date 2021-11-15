@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>icd_42_ros</name>
+    <version>0.0.0</version>
+    <description>An ICD to put 42 outputs onto the ROS network.</description>
+    <maintainer email="rnvandemark@gmail.com">R. Nick Vandemark</maintainer>
+    <license>BSD</license>
+    <author>R. Nick Vandemark</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <depend>roscpp</depend>
+
+    <doc_depend>doxygen</doc_depend>
+</package>

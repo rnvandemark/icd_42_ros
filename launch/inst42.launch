@@ -1,0 +1,20 @@
+<launch>
+    <arg name="index" />
+    <arg name="sim_names" />
+
+    <arg name="ci" value="$(eval sim_names.find(','))" />
+    <arg name="sn" value="$(eval sim_names if -1 == ci else sim_names[0:ci])" />
+
+    <node name="$(eval sn + str(arg('index')))"
+          pkg="icd_42_ros"
+          type="Main42"
+          required="true"
+          output="screen"
+          cwd="node"
+          args="configs/$(arg sn)"
+    />
+    <include file="$(find icd_42_ros)/launch/inst42.launch" if="$(eval ci >= 0)">
+        <arg name="index" value="$(eval index + 1)" />
+        <arg name="sim_names" value="$(eval sim_names[ci+1:])" />
+    </include>
+</launch>
